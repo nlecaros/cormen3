@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
     }
     int* data;
     int num = read_ints(&data);
+    insertion_sort(&data, num);
     print_ints(data, num);
     free(data);
 }
@@ -73,7 +74,6 @@ static int read_ints(int** integers) {
         if (i == allocated) {
             temp = realloc(ints, allocated * 2 * sizeof(int)); // Let's double it.
             if (temp) {
-                free(ints); // free previously allocated memory
                 ints = temp;
                 allocated *= 2;
             } else { // Couldn't get more.  Free whatever we still have and bail.
@@ -91,6 +91,8 @@ static int read_ints(int** integers) {
         if (!*integers) { 
             *integers = ints;
         }
+    } else {
+        printf("Got here for some reason: %d %d\n", i, allocated);
     }
     return i;
 }
