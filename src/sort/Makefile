@@ -8,3 +8,4 @@ insertion_sort.o : insertion_sort.c algorithms.h
 
 clean : 
 	rm -f sort driver.o insertion_sort.o
+

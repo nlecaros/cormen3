@@ -2,23 +2,16 @@
 #include	<stdio.h>
 #include    "algorithms.h"
 
-/*
- * Swap first and second positions
- */
-void swap(int* first, int* second) {
-    int temp = *first;
-    *first = *second;
-    *second = temp;
-}
-
 void insertion_sort(int** input, int size) {
-    int* data = *input;
-    for (int i = 1; i < size; i++) {
-        for (int j = i - 1, k = i; j >= 0; j--, k--) {
-            if (*(data+k) < *(data+j)) {
-                swap((data+k), (data+j)); 
-            }
+    int *data = *input;
+    for (int j = 1; j < size; j++) {
+        int key = *(data+j);
+        int i = j - 1;
+        while (i >= 0 && *(data+i) > key) {
+            *(data+i+1) = *(data+i);
+            i--;
         }
+        *(data+i+1) = key;
     }
 }
 
