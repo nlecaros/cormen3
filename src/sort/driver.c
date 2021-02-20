@@ -3,22 +3,34 @@
  */
 #include    <stdio.h>
 #include    <stdlib.h>
+#include    <string.h>
 #include    "algorithms.h"
 
-#define     MAX_LINE    80
+#define     MAX_LINE        80
+#define     MAX_FUNC_NAME   20
 
 static void usage(char* s);
 static int read_ints(int** integers);
 static void print_ints(int* integers, int num);
+static void (*determine_algorithm(char* s))(int**, int);
 
 int main(int argc, char** argv) {
     if (argc < 2) {
         usage(argv[0]);
-        exit(0);
+        return 0;
     }
+
+    char* algorithm_name = argv[1];
+    fprintf(stderr, "algorithm is: %s\n", algorithm_name);
+    void (*sort)(int**, int) = determine_algorithm(algorithm_name);
+    if (NULL == sort) {
+        fprintf(stderr, "algorithm %s not yet implemented\n", algorithm_name);
+        return 1;
+    }
+
     int* data;
     int num = read_ints(&data);
-    insertion_sort(&data, num);
+    sort(&data, num);
     print_ints(data, num);
     free(data);
 }
@@ -100,6 +112,14 @@ static int read_ints(int** integers) {
 static void print_ints(int* integers, int num) {
     for (int i = 0; i < num; i++) {
         printf("%d\n", *(integers+i));
+    }
+}
+
+static void (*determine_algorithm(char* s))(int**, int) {
+    if (strncmp(s, "insertion_sort", MAX_FUNC_NAME) == 0) {
+        return insertion_sort;
+    } else {
+        return NULL;
     }
 }
 
