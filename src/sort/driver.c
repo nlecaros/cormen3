@@ -118,6 +118,10 @@ static void print_ints(int* integers, int num) {
 static void (*determine_algorithm(char* s))(int**, int) {
     if (strncmp(s, "insertion_sort", MAX_FUNC_NAME) == 0) {
         return insertion_sort;
+    } else if (strncmp(s, "merge_sort", MAX_FUNC_NAME) == 0) {
+        return merge_sort;
+    } else if (strncmp(s, "quick_sort", MAX_FUNC_NAME) == 0) {
+        return quick_sort;
     } else {
         return NULL;
     }
